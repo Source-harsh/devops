@@ -86,6 +86,8 @@ phishlens/
 
 ## Quick start
 
+Run the Docker Compose commands from the repository root.
+
 ```bash
 # 1. Run the services locally
 cd risk-model && pip install -r requirements.txt && uvicorn app.main:app --port 8000
