@@ -86,7 +86,7 @@ phishlens/
 
 ## Quick start
 
-Run the Docker Compose commands from the repository root.
+Run the Docker Compose commands from the repository root. Leave Compose running and send the example scan request from a second terminal.
 
 ```bash
 # 1. Run the services locally
