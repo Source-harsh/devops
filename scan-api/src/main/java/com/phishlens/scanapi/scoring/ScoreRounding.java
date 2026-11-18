@@ -6,6 +6,8 @@ import java.math.RoundingMode;
 /** Rounds scores to the 2 decimals of the API contract, exactly as Python's round(x, 2). */
 public final class ScoreRounding {
 
+    private static final int SCORE_DECIMAL_PLACES = 2;
+
     private ScoreRounding() {
     }
 
@@ -18,6 +20,6 @@ public final class ScoreRounding {
      * the fallback score drifts from risk-model's v1 score on such values.
      */
     public static BigDecimal round(double score) {
-        return new BigDecimal(score).setScale(2, RoundingMode.HALF_EVEN);
+        return new BigDecimal(score).setScale(SCORE_DECIMAL_PLACES, RoundingMode.HALF_EVEN);
     }
 }
