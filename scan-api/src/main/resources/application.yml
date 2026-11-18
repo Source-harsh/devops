@@ -1,0 +1,41 @@
+# Every value below can be overridden by the environment variable named in it
+# (docs/SPEC.md 3.3). In Kubernetes these come from the phishlens-config ConfigMap.
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: scan-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      # Liveness/readiness groups on every host, not only when Spring detects Kubernetes.
+      probes:
+        enabled: true
+      group:
+        # Readiness is deliberately the app's own state only. risk-model is NOT checked:
+        # a model outage is handled by fallback scoring and must not make pods unready.
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+phishlens:
+  model:
+    url: ${MODEL_URL:http://risk-model:8000}
+    timeout-ms: ${MODEL_TIMEOUT_MS:800}
+  verdict:
+    suspicious-threshold: 0.40
+    risk-threshold: ${RISK_THRESHOLD:0.70}
+  app:
+    # @project.version@ is filled in by Maven at build time (pom.xml <version>).
+    version: ${APP_VERSION:@project.version@}
+    commit: ${APP_COMMIT:local}
